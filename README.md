@@ -10,6 +10,8 @@ The material hereby aims at reproducing the results of the Ricciato's preliminar
 
 **Notebook example**
 
+* [Preliminary study](http://nbviewer.jupyter.org/github/gjacopo/morbstat/blob/master/notebooks/01_preliminary_IT_study.ipynb)
+
 **Usage**
 
 **<a name="Data"></a>Data resources**

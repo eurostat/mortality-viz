@@ -35,15 +35,15 @@ The data used in the provided notebook will fetch data from the source directly 
 **<a name="Data"></a>Data resources**
  
 * [_ISTAT_](https://www.istat.it/) online database: [http://dati.istat.it](http://dati.istat.it).
-* Morbidty data collected by _ISTAT_: [_"dati di mortalitˆ"_](https://www.istat.it/it/archivio/240401), including micro datasets with daily death counts: [_"dataset analitico con i decessi giornalieri"_ ](https://www.istat.it/it/files//2020/03/comune-giorno.zip) and aggregated datasets with weekly death counts [_"dataset sintetico con i decessi per settimana "_](https://www.istat.it/it/files//2020/03/comuni-settimana.zip).
-* [Confini delle unitˆ amministrative a fini statistici al 1¡ gennaio 2020](https://www.istat.it/it/archivio/222527).
+* Morbidty data collected by _ISTAT_: ["dati di mortalitˆ"](https://www.istat.it/it/archivio/240401), including micro datasets with daily death counts: ["dataset analitico con i decessi giornalieri"_](https://www.istat.it/it/files//2020/03/comune-giorno.zip) and aggregated datasets with weekly death counts ["dataset sintetico con i decessi per settimana"](https://www.istat.it/it/files//2020/03/comuni-settimana.zip).
+* [Confini delle unitˆ amministrative a fini statistici al 1o gennaio 2020](https://www.istat.it/it/archivio/222527).
 * [Codici statistici delle unitˆ amministrative territoriali: comuni, cittˆ metropolitane, province e regioni](https://www.istat.it/it/archivio/6789).
 
 **<a name="References"></a>References**
 
 * Ricciato F. (2020): [A preliminary view at 2020 mortality data from ISTAT](https://ec.europa.eu/eurostat/cros/content/preliminary-view-2020-mortality-data-istat), last updated on April 16th.
-* Timeline of deaths in IT: [_"LÕandamento dei decessi del 2020"](https://www.istat.it/it/files//2020/03/Decessi_2020_Nota.pdf).
-* Visualisations of deaths in IT cities and provinces  published by _ISTAT_ (using the same data): [_"Andamento dei decessi"_](https://public.tableau.com/views/Mortalit_15858412215300/Mortalit).
+* Timeline of deaths in IT: ["L'andamento dei decessi del 2020"](https://www.istat.it/it/files//2020/03/Decessi_2020_Nota.pdf).
+* Visualisations of deaths in IT cities and provinces  published by _ISTAT_ (using the same data): ["Andamento dei decessi"](https://public.tableau.com/views/Mortalit_15858412215300/Mortalit).
 
 **<a name="Other"></a>Related publications and studies / In the news**
 

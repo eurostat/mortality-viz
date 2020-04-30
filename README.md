@@ -6,7 +6,7 @@ Basic descriptive statistics on morbidity data
 
 The material hereby aims at reproducing the results of Ricciato's preliminary study on 2020 mortality data from ISTAT (see [below](#References)).
 
-**Description **
+**Description**
 
 The _"Data resources"_ section [below](#Data) references the data used for the study (freely available for download). The present project will enable you to reproduce most of the figures presented in the document:
 
@@ -52,6 +52,6 @@ The data used in the provided notebook will fetch data from the source directly 
 * [Tracking covid-19 excess deaths across countries](https://www.economist.com/graphic-detail/2020/04/16/tracking-covid-19-excess-deaths-across-countries), _The Economist_, published on April 16th.
 https://mtmx.github.io/blog/deces_pandemie/
 * [An unprecedented context of health crisis](https://dc-covid.site.ined.fr/en/), _INED_. Comparison of the COVID pandemics in 6 countries, data available [here](https://dc-covid.site.ined.fr/en/data/).
-* Timeline of deaths in FR regions: [Décès pendant la pandémie](https://mtmx.github.io/blog/deces_pandemie/). 
+* Timeline of deaths in FR regions: [Deces pendant la pandemie](https://mtmx.github.io/blog/deces_pandemie/). 
 
 <!-- of interest: https://colab.research.google.com/drive/1WikPfT-Zrelor-4Wh0EocB49akR7yIvY#scrollTo=CoMUgyp22zMm -->

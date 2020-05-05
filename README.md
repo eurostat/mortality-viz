@@ -27,9 +27,9 @@ The _"Data resources"_ section [below](#Data) references the data used for the s
 
 **(Re)run - Usage**
 
-You can rerun the study using `binder`:
-
-[![Binder](https://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/eurostat/losstat/master?filepath=notebooks/01_preliminary_IT_study.ipynb) 
+You can rerun the notebook :
+* in [`Google colab`](https://colab.research.google.com/)** environment (you will need a _Google_ login): launch [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gjacopo/morbstat/blob/master/01_preliminary_IT_study.ipynb).
+* in [`binder`](https://mybinder.org) environment: [![Binder](https://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/eurostat/losstat/master?filepath=notebooks/01_preliminary_IT_study.ipynb) 
 
 You will need standard `Python` library for data handling, _e.g._, `pandas`, `numpy`, `matplotlib`, and date manipulation, _e.g._, `datetime`, `calendar` (see also [below](#Software)). The code herein also uses the [`pyeudatnat`](https://github.com/eurostat/pyEUDatNat) package.
 

@@ -21,7 +21,7 @@ The material hereby aims at reproducing the results of Ricciato's preliminary st
 
 The _"Data resources"_ section [below](#Data) references the data used for the study (freely available for download). The present project will enable you to reproduce most of the figures presented in the document:
 
-* [notebook](http://nbviewer.jupyter.org/github/gjacopo/morbstat/blob/master/notebooks/01_preliminary_IT_study.ipynb)
+* [notebook](https://nbviewer.jupyter.org/github/gjacopo/morbstat/blob/master/01_preliminary_IT_study.ipynb)
 
 **(Re)run - Usage**
 

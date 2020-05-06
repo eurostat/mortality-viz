@@ -135,7 +135,7 @@ try:
             def __init__(self,data):
                 self.meta = deepcopy(metadata)
                 self.data = data
-        return MorbDatIT(data)
+        return MortDatIT(data)
 except AssertionError:
     from pyeudatnat.base import datnatFactory
     from pyeudatnat.misc import Structure
@@ -299,7 +299,7 @@ try:
                   )
 except:
     dIT.load_data()
-    dIT.data  = dIT.data.astype(dtype)
+    dIT.data  = dIT.data.astype(DTYPE)
 finally:
     print ('Data extracted on %s' % Datetime.datetime(Datetime.TODAY(), fmt='%d/%m/%Y'))
     data = dIT.data     
@@ -351,11 +351,13 @@ def get_daymonth(ge):
     try:
         ge = datetime.strptime(ge, DATEFMT)
     except ValueError:  # deal with 29/02   
-        ge = datetime.fromtimestamp(time.mktime(time.strptime(ge, DATEFMT)))
-    except TypeError:
-        pass
-    return ge.day, ge.month
-
+        ge = time.strptime(ge, DATEFMT)
+    except TypeError:   pass
+    try:
+        return ge.day, ge.month
+    except:
+        return ge.tm_mday, ge.tm_mon
+    
 print('Period of data collection considered: [%s/%s, %s/%s]' % \
       (*get_daymonth(dstart), *get_daymonth(dend)))
 
@@ -383,11 +385,17 @@ wend = dendref.isocalendar()[1] # dendref.strftime("%U")
 print('Period of data collection considered: until week #%s' % wend)
 
 span = Datetime.span(since=dstartref, until=dendref)
-ndays = span.days
+ndays = span.days + 1
 print('Max lenght of the time series, i.e. number of days (max) covered by the' 
       ' data collection: %s' % ndays)
+        
+# we set a dummy index
+idx_timeline = pd.date_range(start=dstartref, end=dendref, freq=timedelta(1))
+assert len(idx_timeline) == ndays
+# mdates.drange(ddstart, ddend, timedelta(1))
 
 #%% Figure 1
+# Location of cities/municipalities (comuni) considered in the study
 
 dgeoIT = MortDatIT(METAITGEO)
 
@@ -414,7 +422,7 @@ geodata.head(5)
 f, ax = mplt.subplots(1, figsize=(12, 12))
 geodata.plot(ax=ax)
 ax.set_axis_off()
-ax.set_title('Location of cities/municipalities (comuni) considered in the study',  
+ax.set_title('Figure 1: Map of ANPR municipalities included in the data set', 
              fontsize='small')
 mplt.show()
 
@@ -465,41 +473,57 @@ for y in years:
     if not calendar.isleap(y):
         yloc = dailydeaths.columns.get_loc(y)
         dailydeaths.iloc[ileapday,yloc] = dailydeaths.iloc[ileapday-1,yloc]
-        
 
-# we set a dummy index
-idx_rng = pd.date_range(start=dstartref, end=dendref, freq=timedelta(1))
-# mdates.drange(ddstart, ddend, timedelta(1))
-dailydeaths.set_index(idx_rng, inplace=True)
+if True:
+    dailydeaths.set_index(dailydeaths.index.to_series().apply(lambda ge: get_datetime(ge,YREF)), inplace=True)
+    dailydeaths.reindex(idx_timeline, fill_value=0)        
+else:
+    dailydeaths.set_index(idx_timeline, inplace=True)
 
-def plot_one(dat, index = None, one = None, bar=False, dpi=120,
-             marker='v', color='r', linestyle='-', 
-             label='',  xlabel='', ylabel='', title = '', 
-             xticks = None, xticklabels = None,
-             xrottick = False, grid = False,           
-             locator = None, formatter = None): 
-    if dpi is None:     fig, ax = mplt.subplots()
-    else:               fig, ax = mplt.subplots(dpi=dpi)
+_DPI_ = 120
+_FIGSIZE_ = (7,4)
+def plot_one(dat, index = None, one = None, bar=False, 
+             fig=None, ax=None, figsize=_FIGSIZE_, dpi=_DPI_, shp = (1,1), 
+             marker='v', color='r', linestyle='-', label='',  
+             grid = False, xticks = None, xticklabels = None, xrottick = False, 
+             locator = None, formatter = None, 
+             xlabel='', ylabel='', title = '', suptitle=''): 
+    if ax is None:
+        if shp in (None,[],()): shp = (1,1)
+        if dpi is None:     
+            fig, pax = mplt.subplots(*shp, figsize=figsize, constrained_layout=True)
+        else:               
+            fig, pax = mplt.subplots(*shp, figsize=figsize, dpi=dpi, constrained_layout=True)
+        if isinstance(pax,np.ndarray):
+            if pax.ndim == 1:    ax_ = pax[0]
+            else:               ax_ = pax[0,0]
+        else:
+            ax_ = pax
+    else:
+        ax_, pax = ax, None
     if index is None:
         index = dat.index
     if bar is True:
-        ax.bar(dat.index.values, 
-               dat.loc[index] if one is None else dat.loc[index, one], 
-               color=color, label=label)
+        ax_.bar(dat.index.values, 
+                dat.loc[index] if one is None else dat.loc[index, one], 
+                color=color, label=label)
     else:
-        ax.plot(dat.loc[index] if one is None else dat.loc[index, one], 
-                c=color, marker=marker, markersize=3, ls=linestyle, lw=0.6,
-                label=label)
-    ax.set_xlabel(xlabel), ax.set_ylabel(ylabel)
-    if grid is not False:       ax.grid(linewidth=grid)
-    if xticks is not None:      ax.set_xticks(xticks)
-    if xticklabels is not None: ax.set_xticklabels(xticklabels)            
-    if xrottick is not False:   ax.tick_params(axis ='x', labelrotation=xrottick)
-    if formatter is not None:   ax.xaxis.set_major_formatter(formatter)
-    if locator is not None:     ax.xaxis.set_major_locator(locator)
-    ax.set_title(title,  fontsize='medium')
-    ax.legend()
-    return ax
+        ax_.plot(dat.loc[index] if one is None else dat.loc[index, one], 
+                 c=color, marker=marker, markersize=3, ls=linestyle, lw=0.6,
+                 label=label)
+    ax_.set_xlabel(xlabel), ax_.set_ylabel(ylabel)
+    if grid is not False:       ax_.grid(linewidth=grid)
+    if xticks is not None:      ax_.set_xticks(xticks)
+    if xticklabels is not None: ax_.set_xticklabels(xticklabels)            
+    if xrottick is not False:   ax_.tick_params(axis ='x', labelrotation=xrottick)
+    if formatter is not None:   ax_.xaxis.set_major_formatter(formatter)
+    if locator is not None:     ax_.xaxis.set_major_locator(locator)
+    ax_.legend()
+    if title not in ('',None):  ax_.set_title(title,  fontsize='medium')
+    if fig is not None and suptitle not in ('',None):       
+        fig.suptitle(suptitle,  fontsize='medium')
+    if pax is not None:
+        return fig, pax
     
 years_exc = years.copy()
 years_exc.remove(YEAR)
@@ -509,8 +533,9 @@ avdailydeathsexc = dailydeaths[years_exc].mean(axis = 1, skipna =True) # default
 locator = mdates.DayLocator(bymonthday=[1,15]) # mdates.WeekdayLocator(interval=2)
 formatter = mdates.DateFormatter('%d/%m')
 
-ax = plot_one(dailydeaths, one = YEAR, index=slice(dstartref,dendref), label='daily',                
-              locator = locator, formatter = formatter)
+fig, ax = plot_one(dailydeaths, one = YEAR, index=slice(dstartref,dendref), label='daily %s' % YEAR,  
+                   suptitle = 'Death timeseries for all municipalities in the data set',
+                  locator = locator, formatter = formatter)
 ax.plot(weeklydeaths.loc[dstartref:dendref, YEAR],
         marker='o', markersize=6, linestyle='-', label='weekly mean')
 ax.plot(avdailydeathsexc.loc[dstartref:dendref],
@@ -518,38 +543,51 @@ ax.plot(avdailydeathsexc.loc[dstartref:dendref],
         label='mean over [%s,%s]' % (min(years_exc),max(years_exc)))
 ax.legend()
 
-def plot_oneversus(dat, index = None, one = None, versus = None,  dpi=120,
+def plot_oneversus(dat, index = None, one = None, versus = None,  
+                   fig=None, ax=None, shp = (1,1), dpi=_DPI_,
                    xlabel='', ylabel='', title = '', legend = None,                 
-                   grid = False, locator = None, formatter = None):    
-    if dpi is None:     fig, ax = mplt.subplots()
-    else:               fig, ax = mplt.subplots(dpi=dpi)
+                   grid = False, suptitle = '', locator = None, formatter = None):    
+    if ax is None:
+        if shp in (None,[],()): shp = (1,1)
+        if dpi is None:     fig, pax = mplt.subplots(*shp, constrained_layout=True)
+        else:               fig, pax = mplt.subplots(*shp, dpi=dpi, constrained_layout=True)
+        if isinstance(pax,np.ndarray):
+            if pax.ndim == 1:    ax_ = pax[0]
+            else:               ax_ = pax[0,0]
+        else:
+            ax_ = pax
+    else:
+        ax_, pax = ax, None
     if index is None:
         index = dat.index
     if one is not None:
-        ax.plot(dat.loc[index,one], ls='-', lw=0.6, c='r', 
-                marker='v', markersize=6, fillstyle='none')
-        next(ax._get_lines.prop_cycler)
+        ax_.plot(dat.loc[index,one], ls='-', lw=0.6, c='r', 
+                 marker='v', markersize=6, fillstyle='none')
+        next(ax_._get_lines.prop_cycler)
     if versus is None:
         versus = dat.columns
         try:    versus.remote(one)
         except: pass
-    ax.plot(dat.loc[index,versus], ls='None', marker='o', fillstyle='none')
-    ax.set_xlabel(xlabel), ax.set_ylabel(ylabel)
-    if grid is not False:       ax.grid(linewidth=grid)
-    if locator is not None:     ax.xaxis.set_major_locator(locator)
-    if formatter is not None:   ax.xaxis.set_major_formatter(formatter)
-    ax.set_title(title, fontsize='medium')
+    ax_.plot(dat.loc[index,versus], ls='None', marker='o', fillstyle='none')
+    ax_.set_xlabel(xlabel), ax_.set_ylabel(ylabel)
+    if grid is not False:       ax_.grid(linewidth=grid)
+    if locator is not None:     ax_.xaxis.set_major_locator(locator)
+    if formatter is not None:   ax_.xaxis.set_major_formatter(formatter)
     if legend is None:
         legend = [one]
         legend.extend(versus)
-    ax.legend(legend)
-    return ax
+    ax_.legend(legend)
+    if title not in ('',None):  ax_.set_title(title,  fontsize='medium')
+    if suptitle not in ('',None):       
+        fig.suptitle(suptitle,  fontsize='medium')
+    if pax is not None:
+        return fig, pax
 
 cumdailydeaths = dailydeaths.cumsum(axis = 0, skipna =True) # default
 
 plot_oneversus(dailydeaths, one = YEAR, versus = years_exc[::-1],
             xlabel='day since Jan 1st', ylabel='death counts', 
-            title = 'Dailty deaths (all, total)',                
+            title = 'Daily deaths (all, total)',                
             locator = locator, formatter = formatter)
 
 plot_oneversus(cumdailydeaths, one = YEAR, versus = years_exc[::-1],
@@ -580,7 +618,7 @@ for k in ageofdeaths.keys():
     deaths = pd.DataFrame()
     for y in years:
         COL = dIT.meta.get('index')['%s_%s' % (k,str(y)[2:])]['name']
-        d = data.groupby([AGE,DAY])[COL].agg('sum') #.reindex(idx_rng)
+        d = data.groupby([AGE,DAY])[COL].agg('sum') #.reindex(idx_rng,method='pad')
         if leapday >= dstart and leapday <= dend:
             # ispan = Datetime.span(since=dstart, until=leapday)
             # d.iloc[ileapday] = d.iloc[ileapday-1]
@@ -686,13 +724,13 @@ formatter = mdates.DateFormatter('%d/%m')
 plot_oneversus(dailydeaths_m65, one = YEAR, versus = years_exc[::-1],
             xlabel='day since Jan 1st', 
             ylabel='death counts', 
-            title = 'Dailty deaths (male 65+, total)',                
+            title = 'Daily deaths (male 65+, total)',                
             locator = locator, formatter = formatter)
 
 plot_oneversus(cumdailydeaths_m65, one = YEAR, versus = years_exc[::-1],
             xlabel='day since Jan 1st', 
             ylabel='cumulative death counts', 
-            title = 'Dailty cumulative deaths (male 65+, total)',                
+            title = 'Daily cumulative deaths (male 65+, total)',                
             locator = locator, formatter = formatter)
 
 
@@ -776,49 +814,75 @@ ax.set_title('Relative increment over selected cities/municipalities (comuni)',
 mplt.show()
 
 
-#%% Figure 8
-# Codogno
+#%% Figures 8 - 12
+# Municipality / Codogno
 
-codogno = 'Codogno'
-provincia = cities.loc[cities[CITY]==codogno].loc[:,[PROVINCE,PROV_CODE]].values.tolist()[0]
+fig = {'Codogno':8, 'Nembro':9, 'Orzinuovi':10, 'Brescia':11, 'Bergamo':12
+       }
+city = 'Codogno' # 'Nembro' # 'Orzinuovi' # 'Brescia' # 'Bergamo'
+provincia = cities.loc[cities[CITY]==city].loc[:,PROVINCE].values.tolist()[0]
 
-dailydeaths = pd.DataFrame()
-for y in years:
-    TCOL = dIT.meta.get('index')['t_%s' % str(y)[2:]]['name'] 
-    dailydeaths[y] = data[data[PROV_CODE]==provincia[1]].groupby(DAY)[TCOL].agg('sum')
-    if not calendar.isleap(y):
-        yloc = dailydeaths.columns.get_loc(y)
-        dailydeaths.iloc[ileapday,yloc] = dailydeaths.iloc[ileapday-1,yloc]
-        
-# we set a dummy index
-idx_rng = pd.date_range(start=dstartref, end=dendref, freq=timedelta(1))
-# mdates.drange(ddstart, ddend, timedelta(1))
-dailydeaths.set_index(idx_rng, inplace=True)
+TCOLS = [dIT.meta.get('index')['t_%s' % str(y)[2:]]['name'] \
+         for y in years]
 
-cumdailydeaths = dailydeaths.cumsum(axis = 0, skipna =True) # default
+# method 1: filter first then groupby and aggregate
+dailydeaths = data[data[CITY]==city].groupby(DAY)   \
+    .agg({t:'sum' for t in TCOLS})                  
+dailydeaths.set_index(pd.Index(dailydeaths.index.to_series().apply(lambda ge: get_datetime(ge,YREF))), inplace=True)
+dailydeaths.sort_index(inplace=True)
+
+dailydeaths = dailydeaths.reindex(idx_timeline, method='pad')      \
+    .rename(columns={t:int('20%s' %t[-2:])  for t in TCOLS})    \
+                            
+# method 2: groupby first, then aggregate and filter
+idx = pd.MultiIndex.from_product([data[DAY].unique(),data[CITY].unique()], names = [DAY,CITY])
+dailydeaths = data.groupby([DAY,CITY])              \
+    .agg({t:'sum' for t in TCOLS})                  \
+        .reindex(idx)                               \
+            .fillna(0)                              \
+                .astype(int)                        \
+                    .reset_index(level=CITY)
+dailydeaths = dailydeaths[dailydeaths[CITY]==city]              \
+    .rename(columns={t:int('20%s' %t[-2:])  for t in TCOLS})    \
+        .drop(columns=CITY)        
+dailydeaths.set_index(pd.Index(dailydeaths.index.to_series().apply(lambda ge: get_datetime(ge,YREF))), inplace=True)
+dailydeaths.sort_index(inplace=True)
+
 
 locator = mdates.DayLocator(bymonthday=[1,15]) # mdates.WeekdayLocator(interval=2)
 formatter = mdates.DateFormatter('%d/%m')
 
 plot_oneversus(dailydeaths, one = YEAR, versus = years_exc[::-1],
             xlabel='day since Jan 1st', ylabel='death counts', 
-            title = 'Dailty deaths (total) - Provincia %s' % provincia[0],                
+            title = 'Daily deaths (total) - %s (provincia di %s)' % (city,provincia),                
             locator = locator, formatter = formatter)
+
+cumdailydeaths = dailydeaths.cumsum(axis = 0, skipna =True) # default
 
 plot_oneversus(cumdailydeaths, one = YEAR, versus = years_exc[::-1],
             xlabel='day since Jan 1st', ylabel='cumulative death counts', 
-            title = 'Daily cumulative deaths (total) - Provincia %s' % provincia[0],                
+            title = 'Daily cumulative deaths (total) - %s (provincia di %s)' % (city,provincia),                
             locator = locator, formatter = formatter)
 
-dailydeaths_m65 = pd.DataFrame()
-for y in years:
-    MCOL = dIT.meta.get('index')['m_%s' % str(y)[2:]]['name'] 
-    dailydeaths_m65[y] = data[(data[PROV_CODE]==provincia[1]) & (data[AGE].isin(rages))].groupby(DAY)[MCOL].agg('sum')
-    if not calendar.isleap(y):
-        yloc = dailydeaths_m65.columns.get_loc(y)
-        dailydeaths_m65.iloc[ileapday,yloc] = dailydeaths_m65.iloc[ileapday-1,yloc]
-        
-dailydeaths_m65.set_index(idx_rng, inplace=True)
+MCOLS = [dIT.meta.get('index')['m_%s' % str(y)[2:]]['name'] \
+         for y in years]
+
+# filter first then groupby and aggregate
+dailydeaths_m65 = data[(data[CITY]==city) & (data[AGE].isin(rages))].groupby(DAY)   \
+    .agg({t:'sum' for t in MCOLS})                  
+dailydeaths_m65.set_index(pd.Index(dailydeaths_m65.index.to_series().apply(lambda ge: get_datetime(ge,YREF))), inplace=True)
+dailydeaths_m65.sort_index(inplace=True)
+dailydeaths_m65 = dailydeaths_m65.reindex(idx_timeline)      \
+    .rename(columns={t:int('20%s' %t[-2:])  for t in MCOLS})    \
+
+# dailydeaths_m65 = pd.DataFrame()
+# for y in years:
+#     MCOL = dIT.meta.get('index')['m_%s' % str(y)[2:]]['name'] 
+#     dailydeaths_m65[y] = data[(data[CITY]==city) & (data[AGE].isin(rages))].groupby(DAY)[MCOL].agg('sum')
+#     if not calendar.isleap(y):
+#         yloc = dailydeaths_m65.columns.get_loc(y)
+#         dailydeaths_m65.iloc[ileapday,yloc] = dailydeaths_m65.iloc[ileapday-1,yloc]        
+# dailydeaths_m65.set_index(idx_rng, inplace=True)
 
 cumdailydeaths_m65 = dailydeaths_m65.cumsum(axis = 0, skipna =True) # default
 
@@ -828,11 +892,122 @@ formatter = mdates.DateFormatter('%d/%m')
 plot_oneversus(dailydeaths_m65, one = YEAR, versus = years_exc[::-1],
             xlabel='day since Jan 1st', 
             ylabel='death counts', 
-            title = 'Dailty deaths (male 65+, total) - Provincia %s' % provincia[0],                
+            title = 'Daily deaths (male 65+, total) - %s (provincia di %s)' % (city,provincia),                
             locator = locator, formatter = formatter)
 
 plot_oneversus(cumdailydeaths_m65, one = YEAR, versus = years_exc[::-1],
             xlabel='day since Jan 1st', 
             ylabel='cumulative death counts', 
-            title = 'Dailty cumulative deaths (male 65+, total) - Provincia %s' % provincia[0],                
+            title = 'Daily cumulative deaths (male 65+, total) - %s (provincia di %s)' % (city,provincia),                
             locator = locator, formatter = formatter)
+
+#%% Figures 13
+dstart, dend = get_datetime('0315',YREF), get_datetime('0321',YREF)
+
+provinces = data.loc[:,[PROVINCE, PROV_CODE]].drop_duplicates()
+print("Number of provinces represented in the dataset: \033[1m%s\033[0m" % len(provinces))
+provinces.head(10)
+
+provdeaths = pd.DataFrame()
+for y in years:
+    TCOL = dIT.meta.get('index')['t_%s' % str(y)[2:]]['name'] 
+    provdeaths[y] = data[data['GE_DATE'].between(dstart, dend, inclusive=True)]   \
+        .groupby(PROV_CODE)[TCOL].agg('sum')
+provdeaths['base'] = provdeaths.loc[:,years_exc].mean(axis=1)
+assert len(provinces) == len(provdeaths)
+
+provdeaths.drop(provdeaths[provdeaths[YEAR]<10].index, inplace=True)
+print("Number of provinces that recorded 10+ deaths during the considered period: \033[1m%s\033[0m" 
+      % len(provdeaths))
+
+province = ['Piacenza', 'Cremona', 'Brescia', 'Bergamo', 'Milano']
+provtable = provinces.loc[provinces[PROVINCE].isin(province)]
+provtable.set_index(provtable[PROV_CODE], inplace=True)
+
+fig, ax = mplt.subplots(dpi=_DPI_)
+provdeaths.plot(loglog=True,  x='base', y=YEAR, # kind='scatter',
+                ls='None', color='b', marker='s', fillstyle='none', label='data', ax=ax
+               )
+
+xlim, ylim = ax.get_xlim(), ax.get_ylim()
+x = np.arange(0, 10**4, 1)
+for i, c in zip([1,2,3,4,10], ['g', 'purple', 'red', 'k', 'pink']):    
+    ax.loglog(x, i * x, label = 'y=%sx' % ('' if i==1 else str(i)), ls='-.', lw=0.8, c=c
+             )
+ax.set_xlim(xlim), ax.set_ylim(ylim)
+ax.grid(linewidth=0.3, which="both", ls='dotted')
+
+for index in provtable.index:
+    xpos, ypos = provdeaths.loc[index,'base'], provdeaths.loc[index,YEAR]
+    r = np.random.random() +1
+    ax.annotate(provtable.loc[index,PROVINCE], 
+                (xpos, ypos), 
+                xytext=(xpos-r*10**(np.log10(xpos)-0.4), ypos-r*10**(np.log10(ypos)-1)),  
+                arrowprops=dict(arrowstyle='->'), 
+                size=9, ha='center')
+    
+ax.set_xlabel('baseline')
+ax.set_ylabel('deaths in %s' % YEAR)
+ax.set_title('Figure 13: Total deaths in the period %s - %s by groups of municipalities within the same province' % 
+             (Datetime.datetime(dstart, fmt='%d %b'), Datetime.datetime(dend, fmt='%d %b')),  fontsize='medium'),
+ax.legend()
+
+#%% Figures 14 - 16
+# All municipalities in a Province / Bergamo
+
+fign = {'Bergamo':14, 'Lodi':15, 'Parma':16}
+provincia = 'Bergamo' # 'Lodi' # 'Parma' 
+provincia_code = cities.loc[cities[PROVINCE]==provincia].loc[:,PROV_CODE].values.tolist()[0]
+print("Analysing the 'provincia di' \033[1m%s\033[0m (#\033[1m%s\033[0m)" 
+      % (provincia,int(provincia_code)))
+
+dailydeaths = pd.DataFrame()
+for y in years:
+    TCOL = dIT.meta.get('index')['t_%s' % str(y)[2:]]['name'] 
+    dailydeaths[y] = data[data[PROV_CODE]==provincia_code].groupby(DAY)[TCOL].agg('sum')
+    if not calendar.isleap(y):
+        yloc = dailydeaths.columns.get_loc(y)
+        dailydeaths.iloc[ileapday,yloc] = dailydeaths.iloc[ileapday-1,yloc]
+dailydeaths.set_index(dailydeaths.index.to_series().apply(lambda ge: get_datetime(ge,YREF)), inplace=True)
+dailydeaths = dailydeaths.reindex(idx_timeline, fill_value=0)       
+
+cumdailydeaths = dailydeaths.cumsum(axis = 0)
+
+locator, formatter = mdates.DayLocator(bymonthday=[1,15]), mdates.DateFormatter('%d/%m')
+
+fig, ax = plot_oneversus(dailydeaths, one = YEAR, versus = years_exc[::-1], shp = (1,2),
+                         title='death counts', grid=0.1, xrottick = -45,
+                         locator = locator, formatter = formatter
+                        )
+
+plot_oneversus(cumdailydeaths, one = YEAR, versus = years_exc[::-1], fig = fig, ax=ax[1],
+               title='cumulative death counts', grid=0.1, xrottick = -45,
+               suptitle = 'Figure %s: Daily deaths and cumulative deaths (all) - Province of %s'
+                   % (fign[provincia],provincia),
+               locator = locator, formatter = formatter
+              )
+
+dailydeaths_m65 = pd.DataFrame()
+for y in years:
+    MCOL = dIT.meta.get('index')['m_%s' % str(y)[2:]]['name'] 
+    dailydeaths_m65[y] = data[(data[PROV_CODE]==provincia_code) & (data[AGE].isin(rages))].groupby(DAY)[MCOL].agg('sum')
+    if not calendar.isleap(y):
+        yloc = dailydeaths_m65.columns.get_loc(y)
+        dailydeaths_m65.iloc[ileapday,yloc] = dailydeaths_m65.iloc[ileapday-1,yloc]
+dailydeaths_m65.set_index(dailydeaths_m65.index.to_series().apply(lambda ge: get_datetime(ge,YREF)), inplace=True)
+dailydeaths_m65 = dailydeaths_m65.reindex(idx_timeline, fill_value=0) 
+
+cumdailydeaths_m65 = dailydeaths_m65.cumsum(axis = 0, skipna =True) # default
+
+locator, formatter = mdates.DayLocator(bymonthday=[1,15]), mdates.DateFormatter('%d/%m')
+
+fig, ax = plot_oneversus(dailydeaths_m65, one = YEAR, versus = years_exc[::-1], shp = (1,2),
+            title='death counts', grid=0.1, xrottick = -45,
+            locator = locator, formatter = formatter)
+
+plot_oneversus(cumdailydeaths_m65, one = YEAR, versus = years_exc[::-1], fig = fig, ax=ax[1],
+            title='cumulative death counts', grid=0.1, xrottick = -45,
+            suptitle = 'Figure %s: Daily deaths and cumulative deaths (males 65+) - Province of %s' 
+               % (fign[provincia],provincia),
+            locator = locator, formatter = formatter)
+

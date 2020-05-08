@@ -46,7 +46,7 @@ The data used in the provided notebook will fetch data from the source directly 
 **<a name="Data"></a>Data resources**
  
 * [_ISTAT_](https://www.istat.it/) online database: [http://dati.istat.it](http://dati.istat.it).
-* Morbidty data collected by _ISTAT_: ["dati di mortalitˆ"](https://www.istat.it/it/archivio/240401), including micro datasets with daily death counts: ["dataset analitico con i decessi giornalieri"_](https://www.istat.it/it/files//2020/03/comune-giorno.zip) and aggregated datasets with weekly death counts ["dataset sintetico con i decessi per settimana"](https://www.istat.it/it/files//2020/03/comuni-settimana.zip).
+* Mortality data collected by _ISTAT_: ["dati di mortalitˆ"](https://www.istat.it/it/archivio/240401), including micro datasets with daily death counts: ["dataset analitico con i decessi giornalieri"_](https://www.istat.it/it/files//2020/03/comune-giorno.zip) and aggregated datasets with weekly death counts ["dataset sintetico con i decessi per settimana"](https://www.istat.it/it/files//2020/03/comuni-settimana.zip).
 * [Confini delle unitˆ amministrative a fini statistici al 1o gennaio 2020](https://www.istat.it/it/archivio/222527).
 * [Codici statistici delle unitˆ amministrative territoriali: comuni, cittˆ metropolitane, province e regioni](https://www.istat.it/it/archivio/6789).
 * Identification of cities/municipalities: ["Elenco dei communi"](https://www.istat.it/storage/codici-unita-amministrative/Elenco-comuni-italiani.csv).

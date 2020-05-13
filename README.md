@@ -31,7 +31,9 @@ You can rerun the notebook :
 
 You will need standard `Python` library for data handling, _e.g._, `pandas`, `numpy`, `matplotlib`, and date manipulation, _e.g._, `datetime`, `calendar` (see also [below](#Software)). The code herein also uses the [`pyeudatnat`](https://github.com/eurostat/pyEUDatNat) package.
 
-The `environment.yml` file in this directory provides with all requirements. See also the _"Settings"_ cell of the [`ITmorb.py`](ITmorb.py) source code file.
+* in [`Google colab`](https://colab.research.google.com/)** environment (you will need a _Google_ login): launch [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gjacopo/morbstat/blob/master/02_mortality_european_regions.ipynb).
+
+The `environment.yml` file in this directory provides with all requirements. See also the _"Settings"_ cell of the [`ITmortality.py`](ITmortality.py) source code file.
  
 **<a name="Note"></a>Note**
  

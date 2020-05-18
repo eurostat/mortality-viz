@@ -71,7 +71,7 @@ Most of the data used in the provided notebooks will fetch data from the origina
  
 **<a name="Software"></a>Software requirements**
 
-* Package for metadata and data fetching:  [`pyeudatnat`](https://github.com/eurostat/pyEUDatNat)).
+* Packages for metadata and data fetching: [`pydatutils`](https://github.com/eurostat/pyDatUtils) and [`pyeudatnat`](https://github.com/eurostat/pyEUDatNat).
 * Packages for time-series and dataframe handling: [`numpy`](https://numpy.org), [`pandas`](http://pandas.pydata.org).
 * Plotting package: [`matplotlib`](https://matplotlib.org).
 

@@ -26,7 +26,7 @@ This material will enable you to reproduce most of the figures presented in Ricc
 
 The _"Data resources"_ section [below](#Data) references the data used for the study (freely available for download).  Note that the results and figures presented in Ricciato's document refer to the data downloaded at the time of the study, hence on April, 16th.
 
-##### (re)run 
+##### (Re)run 
 You can rerun the notebook :
 * in [`Google colab`](https://colab.research.google.com/)** environment (you will need a _Google_ login): launch [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gjacopo/morbstat/blob/master/01_preliminary_IT_study.ipynb).
 * in [`binder`](https://mybinder.org) environment: [![Binder](https://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/eurostat/losstat/master?filepath=notebooks/01_preliminary_IT_study.ipynb) 

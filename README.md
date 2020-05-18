@@ -17,7 +17,7 @@ The present project provides with some visualisation/analyses on data on 2020 mo
     <tr> <td align="left"><i>license</i></td> <td align="left"><a href="https://joinup.ec.europa.eu/sites/default/files/eupl1.1.-licence-en_0.pdfEUPL">EUPL</a> </td> </tr> 
 </table>
 
-**2020 mortality data from ISTAT**
+### 1. Early mortality data from ISTAT
 
 ##### Objectives
 This material will enable you to reproduce most of the figures presented in Ricciato's preliminary study on 2020 mortality data from [_ISTAT_](http://dati.istat.it) (see [below](#Resources-and-references)):
@@ -42,7 +42,7 @@ You can rerun the notebook :
 * Timeline of deaths in IT: ["L'andamento dei decessi del 2020"](https://www.istat.it/it/files//2020/03/Decessi_2020_Nota.pdf).
 * Visualisations of deaths in IT cities and provinces  published by _ISTAT_ (using the same data): ["Andamento dei decessi"](https://public.tableau.com/views/Mortalit_15858412215300/Mortalit).
 
-**2020 weekly excess mortality** 
+### 2. Weekly excess mortality rates over Europe
 
 ##### Objectives
 This material will enable you to visualise available data on weekly excess mortality rates over available European countries (see [below](#Resources-and-references)):

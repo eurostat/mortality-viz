@@ -34,7 +34,6 @@ You can rerun the notebook :
 ##### <a name="Resources-and-references"></a>Resources and references
 
 * Ricciato F. (2020): [A preliminary view at 2020 mortality data from ISTAT](https://ec.europa.eu/eurostat/cros/content/preliminary-view-2020-mortality-data-istat), last updated on April 16th.
-* Study of COVID-19 over mortality by _ISTAT_(2020): [Impatto dellÕepidemia COVID-19 sulla mortalita totale della popolazione residente primo trimestre 2020](https://www.istat.it/it/files//2020/05/Rapporto_Istat_ISS.pdf)
 * Mortality data collected by _ISTAT_: ["dati di mortalita"](https://www.istat.it/it/archivio/240401), including micro datasets with daily death counts: ["dataset analitico con i decessi giornalieri"](https://www.istat.it/it/files//2020/03/comune-giorno.zip) and aggregated datasets with weekly death counts ["dataset sintetico con i decessi per settimana"](https://www.istat.it/it/files//2020/03/comuni-settimana.zip).
 * ["Confini delle unita amministrative a fini statistici al 1o gennaio 2020"](https://www.istat.it/it/archivio/222527).
 * ["Codici statistici delle unita amministrative territoriali: comuni, citta metropolitane, province e regioni"](https://www.istat.it/it/archivio/6789).
@@ -78,6 +77,8 @@ Most of the data used in the provided notebooks will fetch data from the origina
 **<a name="References"></a>Other references / In the news**
 
 * Committee for the Coordination of Statistical Activities (2020): [How COVID-19is changing the world: a statistical perspective](https://unstats.un.org/unsd/ccsa/documents/covid19-report-ccsa.pdf)
+* _INSEE_ discussion blog on mortality data and their interpretation (2020): ["Mode d'employ des donnees de l'INSEE"](https://blog.insee.fr/statistiques-sur-les-deces-le-mode-demploi-des-donnees-de-linsee-en-7-questions-reponses/).
+* Study of COVID-19 over mortality by _ISTAT_(2020): [Impatto dell'epidemia COVID-19 sulla mortalita totale della popolazione residente primo trimestre 2020](https://www.istat.it/it/files//2020/05/Rapporto_Istat_ISS.pdf)
 * [Coronavirus: La luce in fondo al tunnel](https://www.neodemos.info/articoli/coronavirus-la-luce-in-fondo-al-tunnel/), _neodemos_, published on March 30th.
 * [Global coronavirus death toll could be 60% higher than reported](https://www.ft.com/content/6bd88b7d-3386-4543-b2e9-0d5c6fac846c), _Financial Times_, published on April 26th.
 * [Tracking covid-19 excess deaths across countries](https://www.economist.com/graphic-detail/2020/04/16/tracking-covid-19-excess-deaths-across-countries), _The Economist_, published on April 16th.

@@ -1,5 +1,5 @@
-losstat
-=====
+mortality-viz
+=============
 
 Basic descriptive statistics on mortality data
 --- 

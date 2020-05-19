@@ -51,7 +51,7 @@ This material will enable you to visualise available data on weekly excess morta
 ##### (Re)run 
 You can rerun the notebook :
 
-* in [`Google colab`](https://colab.research.google.com/)** environment (you will need a _Google_ login): launch [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gjacopo/morbstat/blob/master/02_mortality_european_regions.ipynb).
+* in [`Google colab`](https://colab.research.google.com/) environment (you will need a _Google_ login): launch [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gjacopo/morbstat/blob/master/02_mortality_european_regions.ipynb).
 
 ##### <a name="Resources-and-references"></a>Resources and references
 
@@ -77,7 +77,7 @@ Most of the data used in the provided notebooks will fetch data from the origina
 **<a name="References"></a>Other references / In the news**
 
 * Committee for the Coordination of Statistical Activities (2020): [How COVID-19is changing the world: a statistical perspective](https://unstats.un.org/unsd/ccsa/documents/covid19-report-ccsa.pdf)
-* _INSEE_ discussion blog on mortality data and their interpretation (2020): ["Mode d'employ des donnees de l'INSEE"](https://blog.insee.fr/statistiques-sur-les-deces-le-mode-demploi-des-donnees-de-linsee-en-7-questions-reponses/).
+* _INSEE_ discussion blog on mortality data and their interpretation (2020): ["Mode d'emploi des donnees de l'INSEE"](https://blog.insee.fr/statistiques-sur-les-deces-le-mode-demploi-des-donnees-de-linsee-en-7-questions-reponses/).
 * Study of COVID-19 over mortality by _ISTAT_(2020): [Impatto dell'epidemia COVID-19 sulla mortalita totale della popolazione residente primo trimestre 2020](https://www.istat.it/it/files//2020/05/Rapporto_Istat_ISS.pdf)
 * [Coronavirus: La luce in fondo al tunnel](https://www.neodemos.info/articoli/coronavirus-la-luce-in-fondo-al-tunnel/), _neodemos_, published on March 30th.
 * [Global coronavirus death toll could be 60% higher than reported](https://www.ft.com/content/6bd88b7d-3386-4543-b2e9-0d5c6fac846c), _Financial Times_, published on April 26th.

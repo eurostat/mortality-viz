@@ -46,7 +46,7 @@ You can rerun the notebook :
 ##### Objectives
 This material will enable you to visualise available data on weekly excess mortality rates over available European countries (see [below](#Resources-and-references)):
 
-* [notebook](https://nbviewer.jupyter.org/github/gjacopo/morbstat/blob/master/02_mortality_european_regions.ipynb)
+* [notebook](https://nbviewer.jupyter.org/github/eurostat/mortality-viz/blob/master/02_mortality_european_regions.ipynb)
 
 ##### (Re)run 
 You can rerun the notebook :

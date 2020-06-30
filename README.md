@@ -8,7 +8,7 @@ The present project provides with some visualisation/analyses on data on 2020 mo
 
 <table align="center">
     <!-- <tr> <td align="left"><i>documentation</i></td> <td align="left">available at: ...</td> </tr> -->
-    <tr> <td align="left"><i>status</i></td> <td align="left">since 2020 &ndash; <b>closed</b></td></tr> 
+    <tr> <td align="left"><i>status</i></td> <td align="left">since 2020 <!--&ndash; <b>closed</b>--></td></tr> 
     <tr> <td align="left"><i>contributors</i></td> 
     <td align="left" valign="middle">
 <a href="https://github.com/fabioricciato"><img src="https://github.com/fabioricciato.png" width="40"></a>

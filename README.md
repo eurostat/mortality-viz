@@ -8,7 +8,7 @@ The present project provides with some visualisation/analyses on data on 2020 mo
 
 <table align="center">
     <!-- <tr> <td align="left"><i>documentation</i></td> <td align="left">available at: ...</td> </tr> -->
-    <tr> <td align="left"><i>status</i></td> <td align="left">since 2020 &ndash; <b>closed</b></td></tr> 
+    <tr> <td align="left"><i>status</i></td> <td align="left">since 2020 <!--&ndash; <b>closed</b>--></td></tr> 
     <tr> <td align="left"><i>contributors</i></td> 
     <td align="left" valign="middle">
 <a href="https://github.com/fabioricciato"><img src="https://github.com/fabioricciato.png" width="40"></a>
@@ -28,7 +28,7 @@ The _"Data resources"_ section [below](#Data) references the data used for the s
 
 ##### (Re)run 
 You can rerun the notebook :
-* in [`Google colab`](https://colab.research.google.com/)** environment (you will need a _Google_ login): launch [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gjacopo/morbstat/blob/master/01_preliminary_IT_study.ipynb).
+* in [`Google colab`](https://colab.research.google.com/) environment (you will need a _Google_ login): launch [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gjacopo/morbstat/blob/master/01_preliminary_IT_study.ipynb).
 * in [`binder`](https://mybinder.org) environment: [![Binder](https://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/eurostat/losstat/master?filepath=notebooks/01_preliminary_IT_study.ipynb) 
 
 ##### <a name="Resources-and-references"></a>Resources and references

@@ -6,17 +6,6 @@ Basic descriptive statistics on mortality data
 
 The present project provides with some visualisation/analyses on data on 2020 mortality from various (national authoritative) sources based on availability. 
 
-<table align="center">
-    <!-- <tr> <td align="left"><i>documentation</i></td> <td align="left">available at: ...</td> </tr> -->
-    <tr> <td align="left"><i>status</i></td> <td align="left">since 2020 <!--&ndash; <b>closed</b>--></td></tr> 
-    <tr> <td align="left"><i>contributors</i></td> 
-    <td align="left" valign="middle">
-<a href="https://github.com/fabioricciato"><img src="https://github.com/fabioricciato.png" width="40"></a>
-<a href="https://github.com/gjacopo"><img src="https://github.com/gjacopo.png" width="40"></a>
-</td> </tr> 
-    <tr> <td align="left"><i>license</i></td> <td align="left"><a href="https://joinup.ec.europa.eu/sites/default/files/eupl1.1.-licence-en_0.pdfEUPL">EUPL</a> </td> </tr> 
-</table>
-
 **1. Early mortality data from ISTAT**
 
 ##### Objectives
@@ -64,10 +53,23 @@ You will need standard `Python` library for data handling, _e.g._, `pandas`, `nu
 
 The `environment.yml` file in this directory provides with all requirements. See also the _"Settings"_ cell of the [`ITmortality.py`](ITmortality.py) source code file.
  
-**<a name="Note"></a>**
+**<a name="Note"></a>Note**
  
 Most of the data used in the provided notebooks will fetch data from the original sources directly. Therefore, when (re)running the notebook, the results and figures you generate always refer to the latest available (possibly updated) data. 
  
+**<a name="About"></a>About** 
+ 
+<table align="center">
+    <!-- <tr> <td align="left"><i>documentation</i></td> <td align="left">available at: ...</td> </tr> -->
+    <tr> <td align="left"><i>status</i></td> <td align="left">since 2020 <!--&ndash; <b>closed</b>--></td></tr> 
+    <tr> <td align="left"><i>contributors</i></td> 
+    <td align="left" valign="middle">
+<a href="https://github.com/fabioricciato"><img src="https://github.com/fabioricciato.png" width="40"></a>
+<a href="https://github.com/gjacopo"><img src="https://github.com/gjacopo.png" width="40"></a>
+</td> </tr> 
+    <tr> <td align="left"><i>license</i></td> <td align="left"><a href="https://joinup.ec.europa.eu/sites/default/files/eupl1.1.-licence-en_0.pdfEUPL">EUPL</a> </td> </tr> 
+</table>
+
 **<a name="Software"></a>Software requirements**
 
 * Packages for metadata and data fetching: [`pydatutils`](https://github.com/eurostat/pyDatUtils) and [`pyeudatnat`](https://github.com/eurostat/pyEUDatNat).

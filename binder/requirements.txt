@@ -4,3 +4,5 @@ pyproj
 geopy
 folium
 googletrans
+rtree
+pygeos
